@@ -19,6 +19,8 @@
     $data = json_decode(file_get_contents("php://input"));
 
     $post->quote = $data->quote;
+    $post->author_id = $data->author_id;
+    $post->category_id = $data->category_id;
 
     // Create post
     if($post->create()) {

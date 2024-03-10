@@ -29,7 +29,9 @@
 
             $post_item = array(
                 'id' => $id,
-                'quote' => $quote
+                'quote' => $quote,
+                'author' => $author,
+                'category' => $category
             );
 
             // Push to 'data'

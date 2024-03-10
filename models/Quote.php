@@ -21,8 +21,8 @@
             $query = 'SELECT 
                     q.id,
                     q.quote,
-                    q.author_id,
-                    q.category_id
+                    a.author,
+                    c.category
                 FROM
                     ' . $this->table . ' q
                 INNER JOIN
@@ -47,8 +47,8 @@
             $query = 'SELECT 
                     q.id,
                     q.quote,
-                    q.author_id,
-                    q.category_id
+                    a.author,
+                    c.category
                 FROM
                     ' . $this->table . ' q
                 INNER JOIN
@@ -70,7 +70,9 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Set Properties
-            $this->category = $row['quote'];
+            $this->quote = $row['quote'];
+            $this->author = $row['author'];
+            $this->category = $row['category'];
         }
 
         // Create Post
@@ -104,14 +106,29 @@
         }
 
         // Update Post
-        public function update() {
+        public function update($hasQuote, $hasAuthor, $hasCategory) {
+            $hasItem = 0;
             // Create query
             $query = 'UPDATE ' . $this->table . '
-                SET
-                    quote = :quote,
-                    author_id = :author_id,
-                    category_id = :category_id
-                WHERE
+                SET ';
+            if ($hasQuote) {
+                $query = $query . 'quote = :quote';
+                $hasItem = 1;
+            } 
+            if ($hasAuthor) {
+                if ($hasItem !== 0) {
+                    $query = $query . ',';
+                }
+                $query = $query . 'author_id = :author_id';
+                $hasItem = 1;
+            } 
+            if ($hasCategory) {
+                if ($hasItem !== 0) {
+                    $query = $query . ',';
+                }
+                $query = $query . 'category_id = :category_id';
+            }         
+            $query = $query . ' WHERE
                     id = :id';
 
             // Prepare statement
@@ -125,9 +142,16 @@
 
             // Bind data
             $stmt->bindParam(':id', $this->id);
-            $stmt->bindParam(':quote', $this->quote);
-            $stmt->bindParam(':author_id', $this->author_id);
-            $stmt->bindParam(':category_id', $this->category_id);
+
+            if ($hasQuote) {
+                $stmt->bindParam(':quote', $this->quote);
+            }
+            if ($hasAuthor) {
+                $stmt->bindParam(':author_id', $this->author_id);
+            }
+            if ($hasCategory) {
+                $stmt->bindParam(':category_id', $this->category_id);
+            }
 
             // Execute query
             if($stmt->execute()) {
