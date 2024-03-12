@@ -67,8 +67,8 @@ INSERT INTO quotes (id, quote, author_id, category_id) OVERRIDING SYSTEM VALUE V
 (22, 'I would like to die on Mars. Just not on impact.', 9, 5),
 (23, 'Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying.', 10, 5),
 (24, 'Even with all our technology and the inventions that make modern life so much easier than it once was, it takes just one big natural disaster to wipe all that away and remind us that, here on Earth, we''re still at the mercy of nature.', 8, 3),
-(25, 'Rockets are cool. There''s no getting around that.', 9, 5);
-(26, 'There is no cure for birth and death save to enjoy the interval.', 5, 4)
+(25, 'Rockets are cool. There''s no getting around that.', 9, 5),
+(26, 'There is no cure for birth and death save to enjoy the interval.', 5, 4);
 
 ALTER SEQUENCE quotes_id_seq
 RESTART WITH 27;
