@@ -7,6 +7,8 @@
         // Post Properties
         public $id;
         public $quote;
+        public $author;
+        public $category;
         public $author_id;
         public $category_id;
 
@@ -67,12 +69,7 @@
             // Execute query
             $stmt->execute();
 
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // Set Properties
-            $this->quote = $row['quote'];
-            $this->author = $row['author'];
-            $this->category = $row['category'];
+            return $stmt;
         }
 
         // Create Post

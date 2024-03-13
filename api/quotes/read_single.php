@@ -17,15 +17,30 @@
     $post->id = isset($_GET['id']) ? $_GET['id'] : die();
 
     // Get post
-    $post->read_single();
+    $result = $post->read_single();
 
-    // Create array
-    $post_arr = array(
-        'id' => $post->id,
-        'quote' => $post->quote,
-        'author' => $post->author,
-        'category' => $post->category
-    );
+    // Get Row Count
+    $num = $result->rowCount();
 
-    // Make JSON
-    print_r(json_encode($post_arr));
+    // Check if any posts
+    if($num) {
+
+         $row = $result->fetch(PDO::FETCH_ASSOC);
+
+        // Create array
+        $post_arr = array(
+            'id' => $post->id,
+            'quote' => $row['quote'],
+            'author' => $row['author'],
+            'category' => $row['category']
+        );
+
+        // Make JSON
+        print_r(json_encode($post_arr));
+    } else {
+        // No posts
+        echo json_encode(
+            array('message' => 'No Quotes Found')
+        );
+    }
+

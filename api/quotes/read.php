@@ -15,6 +15,7 @@
 
     // Blog Post Query
     $result = $post->read();
+    
     // Get Row Count
     $num = $result->rowCount();
 
@@ -40,8 +41,6 @@
 
         // Turn to JSON & output
         echo json_encode($posts_arr);
-        return json_encode($posts_arr);
-
     } else {
         // No posts
         echo json_encode(
