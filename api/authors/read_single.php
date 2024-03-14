@@ -17,13 +17,26 @@
     $post->id = isset($_GET['id']) ? $_GET['id'] : die();
 
     // Get post
-    $post->read_single();
+    $result = $post->read_single();
 
-    // Create array
-    $post_arr = array(
-        'id' => $post->id,
-        'author' => $post->author
-    );
+    // Get Row Count
+    $num = $result->rowCount();
 
-    // Make JSON
-    print_r(json_encode($post_arr));
+    if($num) {
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Create array
+        $post_arr = array(
+            'id' => $post->id,
+            'author' => $row['author']
+        );
+        
+        // Make JSON
+        print_r(json_encode($post_arr));
+    } else {
+        // No posts
+        echo json_encode(
+            array('message' => 'No Categories Found')
+        );
+    }
