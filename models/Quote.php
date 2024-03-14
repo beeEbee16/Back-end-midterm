@@ -213,4 +213,26 @@
             return false;
         }
 
+        // Get Single Post
+        public function author_exists($id) {
+            // Create query
+            $query = 'SELECT 
+                    id
+                FROM
+                    author 
+                WHERE
+                    id = ?';
+
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Bind ID
+            $stmt->bindparam(1, $id);
+
+            // Execute query
+            $stmt->execute();
+
+            return ($stmt->rowCount() === 0) ? false : true;
+        }
+
     }

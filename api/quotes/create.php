@@ -7,6 +7,7 @@
 
     include_once '../../config/Database.php';
     include_once '../../models/Quote.php';
+    //include_once '../../models/Author.php';
 
     // Instantiate DB & Connect
     $database = new Database();
@@ -20,9 +21,7 @@
 
     $post->quote = $data->quote;
     $post->author_id = isset($data->author_id) ? $data->author_id : null;
-    //$post->author_id = $data->author_id;
     $post->category_id = isset($data->category_id) ? $data->category_id : null;
-    //$post->category_id = $data->category_id;
 
     // Check if missing parameters
     if ($post->author_id === null || $post->category_id === null) {
@@ -41,6 +40,74 @@
         );
         return;
     }
+
+    $hasAuthor = false;
+    $hasCategory = false;
+
+    // Make sure author exists
+    // Instantiate Blog Post Object
+    //$database2 = new Database();
+    //$db2 = $database->connect();
+    //$author = new Author($db2);
+
+    if (!$post->author_exists($post->author_id)) {
+        echo json_encode(
+            array('message' => 'author_id Not Found')
+        );
+    } else $hasAuthor = true;
+
+    /* $query = 'SELECT 
+                    id
+                FROM
+                    authors 
+                WHERE
+                    id = ?';
+
+    // Prepare Statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind ID
+    $stmt->bindparam(1, $this->id);
+
+    // Execute query
+    $stmt->execute();
+
+    if ($stmt->rowCount() === 0) {
+        echo json_encode(
+            array('message' => 'author_id Not Found')
+        );
+    } else $hasAuthor = true; */
+
+    // Make sure category exists
+    /* $query = 'SELECT 
+                    id
+                FROM
+                    categories 
+                WHERE
+                    id = ?';
+
+    // Prepare Statement
+    $stmt = $this->conn->prepare($query);
+
+    // Bind ID
+    $stmt->bindparam(1, $this->id);
+
+    // Execute query
+    $stmt->execute();
+
+    if ($stmt->rowCount() === 0) {
+        echo json_encode(
+            array('message' => 'category_id Not Found')
+        );
+    } else $hasCategory = true;
+
+    if (!$hasAuthor || !$hasCategory) {
+        echo json_encode(
+            array('message' => 'Quote Not Created')
+        );
+        return;
+    } */
+
 
     // Create post
     if($post->create()) {
