@@ -25,7 +25,7 @@
     // Check if any posts
     if ($num) {
         
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $result->fetch(PDO::FETCH_ASSOC);
 
         // Create array
         $post_arr = array(
@@ -38,6 +38,6 @@
     } else {
         // No posts
         echo json_encode(
-            array('message' => 'No Categories Found')
+            array('message' => 'category_id Not Found')
         );
     }

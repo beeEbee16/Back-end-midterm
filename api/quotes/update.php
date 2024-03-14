@@ -31,7 +31,7 @@
             array('message' => 'Missing Required Parameters')
         );
 
-        die();
+        return;
     }
 
     // Determine parameters that are passed in

@@ -13,6 +13,10 @@
     // Instantiate Blog Post Object
     $post = new Post($db);
 
+    // Get author and category ID
+    $post->author_id = isset($_GET['author_id']) ? $_GET['author_id'] : 0;
+    $post->category_id = isset($_GET['category_id']) ? $_GET['category_id'] : 0;
+
     // Blog Post Query
     $result = $post->read();
     

@@ -19,6 +19,8 @@
 
         // Get Posts
         public function read() {
+            $where = '';
+
             // Create query
             $query = 'SELECT 
                     q.id,
@@ -30,12 +32,37 @@
                 INNER JOIN
                     authors a ON a.id = q.author_id
                 INNER JOIN
-                    categories c ON c.id = q.category_id
-                ORDER BY
+                    categories c ON c.id = q.category_id';
+
+                if ($this->author_id > 0) {
+                    $where = ' a.id = :author_id';
+                }  
+                
+                if ($this->category_id > 0) {
+                    if ($where === '') {
+                        $where .= ' c.id = :category_id';
+                    } else {
+                        $where .= ' AND c.id = :category_id';
+                    }
+                }
+
+                if ($where !== '') {
+                    $query .= ' WHERE' . $where;
+                }
+
+                $query .= ' ORDER BY
                     q.id';
 
             // Prepare statement
             $stmt = $this->conn->prepare($query);
+
+            // Bind parameters
+            if ($this->author_id > 0) {
+                $stmt->bindparam(':author_id', $this->author_id);
+            }  
+            if ($this->category_id > 0) {
+                $stmt->bindparam(':category_id', $this->category_id);
+            }  
 
             // Execute query
             $stmt->execute();
