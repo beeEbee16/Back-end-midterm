@@ -18,8 +18,29 @@
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    // Set ID to update
-    $post->id = $data->id;
+    // Set ID to delete. If no ID, exit
+    if (isset($data->id)) {
+        $post->id = $data->id;
+    } else {
+        echo json_encode(
+            array('message' => 'Missing Required Parameters')
+        );
+        echo json_encode(
+            array('message' => 'Quote Not Deleted')
+        );
+        return;
+    }
+
+    // Check if quote id exists
+    if (!$post->id_exists($post->id, 'quotes')) {
+        echo json_encode(
+            array('message' => 'Quote id Not Found')
+        );
+        echo json_encode(
+            array('message' => 'Quote Not Updated')
+        );
+        return;
+    }
 
     // Delete post
     if($post->delete()) {

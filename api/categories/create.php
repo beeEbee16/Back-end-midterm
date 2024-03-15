@@ -18,8 +18,18 @@
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    $post->category = $data->category;
+    $post->category = isset($data->category) ? $data->category : '';
 
+     // Check if missing parameters
+     if ($post->category === '') {
+        echo json_encode(
+            array('message' => 'Missing Required Parameters')
+        );
+        echo json_encode(
+            array('message' => 'Category Not Created')
+        );
+        return;
+    }
     // Create post
     if($post->create()) {
         echo json_encode(

@@ -130,29 +130,14 @@
         }
 
         // Update Post
-        public function update($hasQuote, $hasAuthor, $hasCategory) {
-            $hasItem = 0;
+        public function update() {
             // Create query
             $query = 'UPDATE ' . $this->table . '
-                SET ';
-            if ($hasQuote) {
-                $query = $query . 'quote = :quote';
-                $hasItem = 1;
-            } 
-            if ($hasAuthor) {
-                if ($hasItem !== 0) {
-                    $query = $query . ',';
-                }
-                $query = $query . 'author_id = :author_id';
-                $hasItem = 1;
-            } 
-            if ($hasCategory) {
-                if ($hasItem !== 0) {
-                    $query = $query . ',';
-                }
-                $query = $query . 'category_id = :category_id';
-            }         
-            $query = $query . ' WHERE
+                SET 
+                    quote = :quote,
+                    author_id = :author_id,
+                    category_id = :category_id
+                WHERE
                     id = :id';
 
             // Prepare statement
@@ -166,16 +151,9 @@
 
             // Bind data
             $stmt->bindParam(':id', $this->id);
-
-            if ($hasQuote) {
-                $stmt->bindParam(':quote', $this->quote);
-            }
-            if ($hasAuthor) {
-                $stmt->bindParam(':author_id', $this->author_id);
-            }
-            if ($hasCategory) {
-                $stmt->bindParam(':category_id', $this->category_id);
-            }
+            $stmt->bindParam(':quote', $this->quote);
+            $stmt->bindParam(':author_id', $this->author_id);
+            $stmt->bindParam(':category_id', $this->category_id);
 
             // Execute query
             if($stmt->execute()) {
@@ -213,4 +191,28 @@
             return false;
         }
 
+        // Determine if ID exists
+        public function id_exists($id, $tableName) {
+            if (!is_numeric($id)) {
+                return false;
+            }
+
+            // Create query
+            $query = 'SELECT 
+                    id
+                FROM ' . $tableName . 
+                ' WHERE
+                    id = ?';
+
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Bind ID
+            $stmt->bindparam(1, $id);
+
+            // Execute query
+            $stmt->execute();
+
+            return ($stmt->rowCount() === 0) ? false : true;
+        }
     }

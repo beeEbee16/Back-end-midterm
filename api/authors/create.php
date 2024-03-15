@@ -18,7 +18,18 @@
     // Get raw posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    $post->author = $data->author;
+    $post->author = isset($data->author) ? $data->author : '';
+
+     // Check if missing parameters
+     if ($post->author === '') {
+        echo json_encode(
+            array('message' => 'Missing Required Parameters')
+        );
+        echo json_encode(
+            array('message' => 'Author Not Created')
+        );
+        return;
+    }
 
     // Create post
     if($post->create()) {

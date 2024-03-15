@@ -30,12 +30,34 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
+        echo json_encode(
+            array('message' => 'Quote Not Updated')
+        );
+        return;
+    }
 
+    // Check if quote id exists
+    if (!$post->id_exists($post->id, 'quotes')) {
+        echo json_encode(
+            array('message' => 'Quote id Not Found')
+        );
+        echo json_encode(
+            array('message' => 'Quote Not Updated')
+        );
         return;
     }
 
     // Determine parameters that are passed in
     if (isset($data->quote)) {
+        if ($data->quote === '') {
+            echo json_encode(
+                array('message' => 'Missing Required Parameters')
+            );
+            echo json_encode(
+                array('message' => 'Quote Not Updated')
+            );
+            return;
+        }
         $post->quote = $data->quote;
         $hasQuote = true;
     } 
@@ -50,21 +72,49 @@
         $hasCategory = true;
     } 
 
-    // If at least one item to update, then update. Otherwise, display error
-    if ($hasQuote || $hasAuthor || $hasCategory) {
-        // Update post
-        if($post->update($hasQuote, $hasAuthor, $hasCategory)) {
+    // Check if all data is present
+    if ($hasQuote && $hasAuthor && $hasCategory) {
+
+        $hasAuthor = false;
+        $hasCategory = false;
+        
+        // Make sure author exists
+        if (!$post->id_exists($post->author_id, 'authors')) {
             echo json_encode(
-                array('message' => 'Quote Updated')
+                array('message' => 'author_id Not Found')
             );
+        } else $hasAuthor = true;
+
+        // Make sure category exists
+        if (!$post->id_exists($post->category_id, 'categories')) {
+            echo json_encode(
+                array('message' => 'category_id Not Found')
+            );
+        } else $hasCategory = true;
+
+        if ($hasAuthor && $hasCategory) {
+            // Update post
+            if($post->update()) {
+                echo json_encode(
+                    array('message' => 'Quote Updated')
+                );
+            } else {
+                echo json_encode(
+                    array('message' => 'Quote Not Updated')
+                );
+            }
         } else {
             echo json_encode(
-                array('message' => 'Quote Not Updated')
+                array('message' => 'Missing Required Parameters')
             );
         }
+
     } else {
         echo json_encode(
             array('message' => 'Missing Required Parameters')
+        );
+        echo json_encode(
+            array('message' => 'Quote Not Updated')
         );
     }
 

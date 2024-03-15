@@ -138,4 +138,28 @@
             return false;
         }
 
+        // Determine if ID exists
+        public function id_exists($id, $tableName) {
+            if (!is_numeric($id)) {
+                return false;
+            }
+
+            // Create query
+            $query = 'SELECT 
+                    id
+                FROM ' . $tableName . 
+                ' WHERE
+                    id = ?';
+
+            // Prepare Statement
+            $stmt = $this->conn->prepare($query);
+
+            // Bind ID
+            $stmt->bindparam(1, $id);
+
+            // Execute query
+            $stmt->execute();
+
+            return ($stmt->rowCount() === 0) ? false : true;
+        }
     }
