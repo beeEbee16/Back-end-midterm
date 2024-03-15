@@ -24,7 +24,7 @@
 
     if($num) {
 
-        $row = $result->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Create array
         $post_arr = array(
@@ -37,6 +37,6 @@
     } else {
         // No posts
         echo json_encode(
-            array('message' => 'author_id Not Found')
+            array('message' => 'No Categories Found')
         );
     }
