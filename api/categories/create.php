@@ -25,15 +25,19 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+      /*   echo json_encode(
             array('message' => 'Category Not Created')
-        );
+        ); */
         return;
     }
+
+    $newId = 0;
+
     // Create post
-    if($post->create()) {
+    $newId = $post->create();
+    if($newId) {
         echo json_encode(
-            array('message' => 'Category Created')
+            array('id' => $newId, 'category'=> $post->category)
         );
     } else {
         echo json_encode(

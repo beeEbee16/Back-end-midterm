@@ -25,9 +25,9 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+       /*  echo json_encode(
             array('message' => 'Author Not Deleted')
-        );
+        ); */
         return;
     }
 
@@ -36,19 +36,19 @@
         echo json_encode(
             array('message' => 'Author Not Found')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Author Not Updated')
-        );
+        ); */
         return;
     }
 
     // Delete post
     if($post->delete()) {
         echo json_encode(
-            array('message' => 'Post Deleted')
+            array('id' => $post->id)
         );
     } else {
         echo json_encode(
-            array('message' => 'Post Not Deleted')
+            array('message' => 'Author Not Deleted')
         );
     }

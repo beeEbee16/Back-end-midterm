@@ -25,27 +25,27 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Quote Not Deleted')
-        );
+        ); */
         return;
     }
 
     // Check if quote id exists
     if (!$post->id_exists($post->id, 'quotes')) {
         echo json_encode(
-            array('message' => 'Quote id Not Found')
+            array('message' => 'No Quotes Found')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Quote Not Updated')
-        );
+        ); */
         return;
     }
 
     // Delete post
     if($post->delete()) {
         echo json_encode(
-            array('message' => 'Quote Deleted')
+            array('id'=> $post->id)
         );
     } else {
         echo json_encode(

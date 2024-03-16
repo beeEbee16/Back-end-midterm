@@ -30,20 +30,20 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Quote Not Updated')
-        );
+        ); */
         return;
     }
 
     // Check if quote id exists
     if (!$post->id_exists($post->id, 'quotes')) {
         echo json_encode(
-            array('message' => 'Quote id Not Found')
+            array('message' => 'No Quotes Found')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Quote Not Updated')
-        );
+        ); */
         return;
     }
 
@@ -53,9 +53,9 @@
             echo json_encode(
                 array('message' => 'Missing Required Parameters')
             );
-            echo json_encode(
+            /* echo json_encode(
                 array('message' => 'Quote Not Updated')
-            );
+            ); */
             return;
         }
         $post->quote = $data->quote;
@@ -96,7 +96,7 @@
             // Update post
             if($post->update()) {
                 echo json_encode(
-                    array('message' => 'Quote Updated')
+                    array('id' => $post->id, 'quote' => $post->quote, 'author_id' => $post->author_id, 'category_id' => $post->category_id)
                 );
             } else {
                 echo json_encode(
@@ -113,9 +113,9 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Quote Not Updated')
-        );
+        ); */
     }
 
     

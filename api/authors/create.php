@@ -25,16 +25,19 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Author Not Created')
-        );
+        ); */
         return;
     }
 
+    $newId = 0;
+
     // Create post
-    if($post->create()) {
+    $newId = $post->create();
+    if($newId) {
         echo json_encode(
-            array('message' => 'Author Created')
+            array('id' => $newId, 'author'=> $post->author)
         );
     } else {
         echo json_encode(

@@ -25,9 +25,9 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Category Not Deleted')
-        );
+        ); */
         return;
     }
 
@@ -36,16 +36,16 @@
         echo json_encode(
             array('message' => 'Category Not Found')
         );
-        echo json_encode(
+        /* echo json_encode(
             array('message' => 'Category Not Updated')
-        );
+        ); */
         return;
     }
 
     // Delete post
     if($post->delete()) {
         echo json_encode(
-            array('message' => 'Category Deleted')
+            array('id' => $post->id)
         );
     } else {
         echo json_encode(

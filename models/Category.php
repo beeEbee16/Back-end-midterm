@@ -73,13 +73,13 @@
 
             // Execute query
             if($stmt->execute()) {
-                return true;
+                return $this->conn->lastInsertId();;
             }
 
             // Print error if something goes wrong
             printf("Error: %s.\n", $stmt->error);
 
-            return false;
+            return 0;
         }
 
         // Update Post

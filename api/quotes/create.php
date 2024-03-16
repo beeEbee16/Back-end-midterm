@@ -23,6 +23,25 @@
     $post->category_id = isset($data->category_id) ? $data->category_id : null;
 
     // Check if missing parameters
+    // Determine parameters that are passed in
+    if (isset($data->quote)) {
+        if ($data->quote === '') {
+            echo json_encode(
+                array('message' => 'Missing Required Parameters')
+            );
+           /*  echo json_encode(
+                array('message' => 'Quote Not Updated')
+            ); */
+            return;
+        }
+        $post->quote = $data->quote;
+        $hasQuote = true;
+    } else {
+        echo json_encode(
+            array('message' => 'Missing Required Parameters')
+        );
+    }
+
     if ($post->author_id === null || $post->category_id === null) {
         if ($post->author_id === null) {
             echo json_encode(
@@ -34,14 +53,15 @@
                 array('message' => 'Missing Required Parameters')
             );
         }
-        echo json_encode(
+ /*        echo json_encode(
             array('message' => 'Quote Not Created')
-        );
+        ); */
         return;
     }
 
     $hasAuthor = false;
     $hasCategory = false;
+    $newId = 0;
 
     // Make sure author exists
     if (!$post->id_exists($post->author_id, 'authors')) {
@@ -59,17 +79,18 @@
 
     if ($hasAuthor && $hasCategory) {
         // Create post
-        if($post->create()) {
+        $newId = $post->create();
+        if($newId) {
             echo json_encode(
-                array('message' => 'Quote Created')
+                array('id' => $newId, 'quote' => $post->quote, 'author_id' => $post->author_id, 'category_id' => $post->category_id)
             );
         } else {
             echo json_encode(
                 array('message' => 'Quote Not Created')
             );
         }
-    } else {
+    } /* else {
         echo json_encode(
             array('message' => 'Quote Not Created')
         );
-    }
+    } */
