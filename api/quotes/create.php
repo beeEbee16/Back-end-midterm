@@ -23,15 +23,11 @@
     $post->category_id = isset($data->category_id) ? $data->category_id : null;
 
     // Check if missing parameters
-    // Determine parameters that are passed in
     if (isset($data->quote)) {
         if ($data->quote === '') {
             echo json_encode(
                 array('message' => 'Missing Required Parameters')
             );
-           /*  echo json_encode(
-                array('message' => 'Quote Not Updated')
-            ); */
             return;
         }
         $post->quote = $data->quote;
@@ -53,9 +49,6 @@
                 array('message' => 'Missing Required Parameters')
             );
         }
- /*        echo json_encode(
-            array('message' => 'Quote Not Created')
-        ); */
         return;
     }
 
@@ -89,8 +82,4 @@
                 array('message' => 'Quote Not Created')
             );
         }
-    } /* else {
-        echo json_encode(
-            array('message' => 'Quote Not Created')
-        );
-    } */
+    }

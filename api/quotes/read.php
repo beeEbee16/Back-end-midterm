@@ -27,7 +27,6 @@
     if($num) {
         // Post array
         $posts_arr = array();
-        //$posts_arr['data'] = array();
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);

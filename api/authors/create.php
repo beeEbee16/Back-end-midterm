@@ -25,9 +25,6 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        /* echo json_encode(
-            array('message' => 'Author Not Created')
-        ); */
         return;
     }
 

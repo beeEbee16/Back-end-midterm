@@ -25,9 +25,6 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-       /*  echo json_encode(
-            array('message' => 'Author Not Deleted')
-        ); */
         return;
     }
 
@@ -36,9 +33,6 @@
         echo json_encode(
             array('message' => 'Author Not Found')
         );
-        /* echo json_encode(
-            array('message' => 'Author Not Updated')
-        ); */
         return;
     }
 

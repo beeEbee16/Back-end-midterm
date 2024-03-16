@@ -30,9 +30,6 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        /* echo json_encode(
-            array('message' => 'Quote Not Updated')
-        ); */
         return;
     }
 
@@ -41,9 +38,6 @@
         echo json_encode(
             array('message' => 'No Quotes Found')
         );
-        /* echo json_encode(
-            array('message' => 'Quote Not Updated')
-        ); */
         return;
     }
 
@@ -53,9 +47,6 @@
             echo json_encode(
                 array('message' => 'Missing Required Parameters')
             );
-            /* echo json_encode(
-                array('message' => 'Quote Not Updated')
-            ); */
             return;
         }
         $post->quote = $data->quote;
@@ -103,19 +94,11 @@
                     array('message' => 'Quote Not Updated')
                 );
             }
-        } /* else {
-            echo json_encode(
-                array('message' => 'Missing Required Parameters')
-            );
-        } */
-
+        } 
     } else {
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-        /* echo json_encode(
-            array('message' => 'Quote Not Updated')
-        ); */
     }
 
     

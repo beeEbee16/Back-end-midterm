@@ -25,9 +25,6 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-       /*  echo json_encode(
-            array('message' => 'Author Not Updated')
-        ); */
         return;
     }
 
@@ -36,9 +33,6 @@
         echo json_encode(
             array('message' => 'author_id Not Found')
         );
-       /*  echo json_encode(
-            array('message' => 'Author Not Updated')
-        ); */
         return;
     }
 
@@ -48,9 +42,6 @@
             echo json_encode(
                 array('message' => 'Missing Required Parameters')
             );
-            /* echo json_encode(
-                array('message' => 'Author Not Updated')
-            ); */
             return;
         }
         $post->author = $data->author;
@@ -69,7 +60,4 @@
         echo json_encode(
             array('message' => 'Missing Required Parameters')
         );
-       /*  echo json_encode(
-            array('message' => 'Author Not Updated')
-        ); */
     }
